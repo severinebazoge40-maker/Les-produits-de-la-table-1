@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flashcards - Les produits de la table</title>
+  <style>
+    :root { --blue:#2e74b5; --dark:#1f4d78; --pale:#e8eef5; --red:#9b1c1c; --ink:#18212a; --muted:#5d6872; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Calibri, Arial, sans-serif; color:var(--ink); background:#f3f6f9; }
+    .hero { padding:2.7rem 1.2rem 2rem; text-align:center; background:white; border-bottom:1px solid #d8e0e8; }
+    h1 { margin:0; color:var(--dark); font-size:clamp(2rem, 5vw, 3.2rem); letter-spacing:.02em; }
+    .subtitle { margin:.45rem 0 1rem; color:var(--blue); font-size:1.25rem; }
+    .instructions { max-width:760px; margin:1.2rem auto 0; padding:1rem 1.2rem; text-align:left; background:#f4f6f9; border-left:5px solid var(--blue); border-radius:8px; line-height:1.5; }
+    .toolbar { display:flex; gap:.7rem; flex-wrap:wrap; justify-content:center; margin:1.2rem auto 0; }
+    button { border:0; border-radius:999px; padding:.7rem 1rem; font:inherit; font-weight:700; cursor:pointer; background:var(--blue); color:white; }
+    button.secondary { color:var(--dark); background:var(--pale); }
+    main { max-width:1180px; margin:0 auto; padding:2rem 1rem 3rem; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 470px), 1fr)); gap:1.4rem; }
+    .card { min-height:480px; perspective:1400px; cursor:pointer; outline:none; break-inside:avoid; }
+    .card:focus-visible { border-radius:14px; box-shadow:0 0 0 4px #86b7e5; }
+    .card-inner { position:relative; width:100%; height:100%; min-height:480px; transition:transform .55s ease; transform-style:preserve-3d; }
+    .card.flipped .card-inner { transform:rotateY(180deg); }
+    .face { position:absolute; inset:0; border:1px solid #b8c3ce; border-radius:14px; background:white; box-shadow:0 9px 24px rgba(31,77,120,.12); backface-visibility:hidden; overflow:auto; }
+    .front { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2.4rem; text-align:center; border-top:10px solid var(--blue); }
+    .front h2 { margin:.35rem 0 1.5rem; color:var(--dark); font-size:1.8rem; }
+    .card-label { color:var(--blue); font-weight:800; letter-spacing:.12em; }
+    .eyebrow { margin:.25rem 0 .65rem; color:var(--red); font-size:.82rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+    .question { max-width:34ch; margin:0; font-size:1.35rem; font-weight:700; line-height:1.35; }
+    .hint { margin:2rem 0 0; color:var(--muted); font-size:.9rem; }
+    .back { transform:rotateY(180deg); padding:0 1.25rem 1.15rem; }
+    .back header { display:flex; gap:.8rem; justify-content:space-between; align-items:center; margin:0 -1.25rem 1rem; padding:.8rem 1.25rem; color:white; background:var(--blue); }
+    .back header span { font-size:.78rem; letter-spacing:.08em; }
+    .back header strong { text-align:right; }
+    .back .eyebrow { color:var(--blue); }
+    dl { margin:0; }
+    .fact { display:grid; grid-template-columns:10.5rem 1fr; gap:.7rem; padding:.5rem 0; border-top:1px solid #e2e7ec; line-height:1.3; }
+    dt { color:var(--dark); font-weight:800; }
+    dd { margin:0; }
+    footer { padding:1.2rem; text-align:center; color:var(--muted); background:white; border-top:1px solid #d8e0e8; }
+    @media (max-width:600px) { .fact { grid-template-columns:1fr; gap:.15rem; } .card,.card-inner { min-height:590px; } }
+    @media (prefers-reduced-motion:reduce) { .card-inner { transition:none; } }
+    @media print {
+      @page { size:A4 portrait; margin:12mm; }
+      body { background:white; }
+      .hero { padding:.4rem 0 1rem; }
+      .instructions,.toolbar,.hint,footer { display:none !important; }
+      main { max-width:none; padding:0; }
+      .grid { display:block; }
+      .card { min-height:auto; margin:0 0 8mm; page-break-inside:avoid; }
+      .card-inner { min-height:auto; transform:none !important; }
+      .face { position:relative; min-height:auto; overflow:visible; box-shadow:none; backface-visibility:visible; }
+      .front { display:none; }
+      .back { transform:none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <h1>FLASHCARDS</h1>
+    <p class="subtitle">Les produits de la table - Pathologie pédicurale P1</p>
+    <div class="instructions"><strong>Mode d’emploi :</strong> répondez à la question, retournez la carte, puis vérifiez les six repères. Classez mentalement chaque carte en « acquis », « à revoir » ou « non acquis ».</div>
+    <div class="toolbar">
+      <button id="reveal" type="button">Afficher toutes les réponses</button>
+      <button id="reset" class="secondary" type="button">Revenir aux questions</button>
+      <button class="secondary" type="button" onclick="window.print()">Imprimer</button>
+    </div>
+  </header>
+  <main><section class="grid" aria-label="11 flashcards"><article class="card" tabindex="0" role="button" aria-label="Carte 1, MERCRYL. Cliquer pour retourner la carte." aria-pressed="false">
+      <div class="card-inner">
+        <section class="face front">
+          <div class="card-label">CARTE 01</div>
+          <h2>MERCRYL</h2>
+          <p class="eyebrow">Question mémoire</p>
+          <p class="question">Quel antiseptique associe benzalkonium et chlorhexidine ?</p>
+          <p class="hint">Cliquer ou appuyer sur Entrée pour afficher la réponse</p>
+        </section>
+        <section class="face back" aria-hidden="true">
+          <header><span>CARTE 01</span><strong>MERCRYL</strong></header>
+          <p class="eyebrow">Réponse essentielle</p>
+          <dl><div class="fact"><dt>Famille</dt><dd>Antiseptique majeur (biguanide) + antiseptique intermédiaire (ammonium quaternaire)</dd></div><div class="fact"><dt>Propriétés</dt><dd>Antiseptique, bactéricide.</dd></div><div class="fact"><dt>Composition</dt><dd>Chlorure de benzalkonium + digluconate de chlorhexidine.</dd></div><div class="fact"><dt>Indications</dt><dd>Antisepsie ou nettoyage des petites plaies superficielles.</dd></div><div class="fact"><dt>Précautions / contre-indications</dt><dd>Allergie aux ammoniums quaternaires ; ne pas désinfecter le matériel chirurgical ; éviter l’usage prolongé chez l’enfant ; ne pas associer à un autre antiseptique.</dd></div><div class="fact"><dt>Utilisation</dt><dd>Pure sur la peau ; diluée au 1/10e sur les muqueuses ; 1 à 2 fois par jour.</dd></div></dl>
+        </section>
+      </div>
+    </article><article class="card" tabindex="0" role="button" aria-label="Carte 2, BISEPTINE. Cliquer pour retourner la carte." aria-pressed="false">
+      <div class="card-inner">
+        <section class="face front">
+          <div class="card-label">CARTE 02</div>
+          <h2>BISEPTINE</h2>
+          <p class="eyebrow">Question mémoire</p>
+          <p class="question">Quel produit s’utilise pur sur la peau mais pas sur les muqueuses ?</p>
+          <p class="hint">Cliquer ou appuyer sur Entrée pour afficher la réponse</p>
+        </section>
+        <section class="face back" aria-hidden="true">
+          <header><span>CARTE 02</span><strong>BISEPTINE</strong></header>
+          <p class="eyebrow">Réponse essentielle</p>
+          <dl><div class="fact"><dt>Famille</dt><dd>Deux antiseptiques majeurs (biguanide et alcool) + un antiseptique intermédiaire (ammonium quaternaire)</dd></div><div class="fact"><dt>Propriétés</dt><dd>Antiseptique à large spectre.</dd></div><div class="fact"><dt>Composition</dt><dd>Gluconate de chlorhexidine + chlorure de benzalkonium + alcool benzylique.</dd></div><div class="fact"><dt>Indications</dt><dd>Antisepsie de la peau et des plaies peu profondes ; traitement d’appoint des lésions cutanées infectées ou à risque d’infection.</dd></div><div class="fact"><dt>Précautions / contre-indications</dt><dd>Allergie aux ammoniums quaternaires, à l’alcool ou à la chlorhexidine ; ne pas utiliser sur les muqueuses ni pour le matériel médico-chirurgical ; ne pas associer à d’autres antiseptiques.</dd></div><div class="fact"><dt>Utilisation</dt><dd>Pure sur la peau, 1 à 2 fois par jour.</dd></div></dl>
+        </section>
+      </div>
+    </article><article class="card" tabindex="0" role="button" aria-label="Carte 3, ALCOOL MODIFIÉ À 70 %. Cliquer pour retourner la carte." aria-pressed="false">
+      <div class="card-inner">
+        <section class="face front">
+          <div class="card-label">CARTE 03</div>
+          <h2>ALCOOL MODIFIÉ À 70 %</h2>
+          <p class="eyebrow">Question mémoire</p>
+          <p class="question">Pourquoi l’alcool à 70° est-il préféré à l’alcool à 90° pour la peau ?</p>
+          <p class="hint">Cliquer ou appuyer sur Entrée pour afficher la réponse</p>
+        </section>
+        <section class="face back" aria-hidden="true">
+          <header><span>CARTE 03</span><strong>ALCOOL MODIFIÉ À 70 %</strong></header>
+          <p class="eyebrow">Réponse essentielle</p>
+          <dl><div class="fact"><dt>Famille</dt><dd>Antiseptique majeur - alcool</dd></div><div class="fact"><dt>Propriétés</dt><dd>Antiseptique, bactéricide et désinfectant.</dd></div><div class="fact"><dt>Composition</dt><dd>Éthanol à 70 %. Jaune : camphre et tartrazine. Bleu : bleu de méthylène.</dd></div><div class="fact"><dt>Indications</dt><dd>Antisepsie de la peau saine et des plaies superficielles peu étendues. L’alcool à 70° est plus adapté à la peau que l’alcool à 90°.</dd></div><div class="fact"><dt>Précautions / contre-indications</dt><dd>Ne pas appliquer sur les muqueuses, une grande surface ou chez le nourrisson de moins de 30 mois ; ne pas associer à d’autres antiseptiques.</dd></div><div class="fact"><dt>Utilisation</dt><dd>Deux fois par jour, avec compresses imprégnées ou pansements humides.</dd></div></dl>
+        </section>
+      </div>
+    </article><article class="card" tabindex="0" role="button" aria-label="Carte 4, BÉTADINE - SOLUTION DERMIQUE 10 %. Cliquer pour retourner la carte." aria-pressed="false">
+      <div class="card-inner">
+        <section class="face front">
+          <div class="card-label">CARTE 04</div>
+          <h2>BÉTADINE - SOLUTION DERMIQUE 10 %</h2>
+          <p class="eyebrow">Question mémoire</p>
+          <p class="question">Quel antiseptique iodé existe en plusieurs couleurs de flacons selon l’usage ?</p>
+          <p class="hint">Cliquer ou appuyer sur Entrée pour afficher la réponse</p>
+        </section>
+        <section class="face back" aria-hidden="true">
+          <header><span>CARTE 04</span><strong>BÉTADINE - SOLUTION DERMIQUE 10 %</strong></header>
+          <p class="eyebrow">Réponse essentielle</p>
+          <dl><div class="fact"><dt>Famille</dt><dd>Antiseptique majeur - halogène - dérivé iodé</dd></div><div class="fact"><dt>Propriétés</dt><dd>Large spectre : bactéricide, fongicide, virucide et désinfectant.</dd></div><div class="fact"><dt>Composition</dt><dd>Polyvidone iodée.</dd></div><div class="fact"><dt>Indications</dt><dd>Antisepsie de la peau avant une opération ; plaies et brûlures superficielles peu étendues ; traitement d’appoint des lésions de la peau ou des muqueuses infectées ou à risque.</dd></div><div class="fact"><dt>Précautions / contre-indications</dt><dd>Allergie à l’iode ; dysfonctionnement thyroïdien ; nourrisson de moins de 1 mois ; grossesse et allaitement ; association à d’autres antiseptiques déconseillée.</dd></div><div class="fact"><dt>Utilisation</dt><dd>Pure ou diluée. En pédicurie : application au coton-tige dans les espaces interdigitaux ; pansements selon l’indication décrite dans le cours.</dd></div></dl>
+        </section>
+      </div>
+    </article><article class="card" tabindex="0" role="button" aria-label="Carte 5, DAKIN STABILISÉ. Cliquer pour retourner la carte." aria-pressed="false">
+      <div class="card-inner">
+        <section class="face front">
+          <div class="card-label">CARTE 05</div>
+          <h2>DAKIN STABILISÉ</h2>
+          <p class="eyebrow">Question mémoire</p>
+          <p class="question">Quel antiseptique chloré est reconnaissable à sa coloration rose ?</p>
+          <p class="hint">Cliquer ou appuyer sur Entrée pour afficher la réponse</p>
+        </section>
+        <section class="face back" aria-hidden="true">
+          <header><span>CARTE 05</span><strong>DAKIN STABILISÉ</strong></header>
+          <p class="eyebrow">Réponse essentielle</p>
+          <dl><div class="fact"><dt>Famille</dt><dd>Antiseptique majeur - halogéné - dérivé chloré</dd></div><div class="fact"><dt>Propriétés</dt><dd>Large spectre : bactéricide, fongicide, sporicide et virucide. Action rapide dès la première minute.</dd></div><div class="fact"><dt>Composition</dt><dd>Hypochlorite de sodium (chlore actif) + permanganate de potassium (coloration rose).</dd></div><div class="fact"><dt>Indications</dt><dd>Antisepsie de la peau, des muqueuses et des plaies ; lavage, pansement non occlusif ou méchage.</dd></div><div class="fact"><dt>Précautions / contre-indications</dt><dd>Risque d’allergie au chlore ; brûlures ou irritations possibles ; ne pas mélanger à un autre antiseptique ou à un savon ; ne pas désinfecter le matériel médico-chirurgical.</dd></div><div class="fact"><dt>Utilisation</dt><dd>Pur, en lavage, compresses imbibées ou pansements humides.</dd></div></dl>
+        </section>
+      </div>
+    </article><article class="card" tabindex="0" role="button" aria-label="Carte 6, HEXOMÉDINE 1 POUR 1 000. Cliquer pour retourner la carte." aria-pressed="false">
+      <div class="card-inner">
+        <section class="face front">
+          <div class="card-label">CARTE 06</div>
+          <h2>HEXOMÉDINE 1 POUR 1 000</h2>
+          <p class="eyebrow">Question mémoire</p>
+          <p class="question">Quel antiseptique à base d’hexamidine agit lentement ?</p>
+          <p class="hint">Cliquer ou appuyer sur Entrée pour afficher la réponse</p>
+        </section>
+        <section class="face back" aria-hidden="true">
+          <header><span>CARTE 06</span><strong>HEXOMÉDINE 1 POUR 1 000</strong></header>
+          <p class="eyebrow">Réponse essentielle</p>
+          <dl><div class="fact"><dt>Famille</dt><dd>Antiseptique mineur - diamidines</dd></div><div class="fact"><dt>Propriétés</dt><dd>Antiseptique et désinfectant ; bactéricide d’action lente.</dd></div><div class="fact"><dt>Composition</dt><dd>Hexamidine di-isétionate.</dd></div><div class="fact"><dt>Indications</dt><dd>Traitement d’appoint des affections bactériennes ou susceptibles de se surinfecter.</dd></div><div class="fact"><dt>Précautions / contre-indications</dt><dd>Allergie aux diamidines ; pas avant un prélèvement ou un geste invasif ; pas pour le matériel chirurgical ; pas sur les muqueuses ; Hexomédine transcutanée interdite sur les plaies ouvertes ; éviter les antiseptiques successifs.</dd></div><div class="fact"><dt>Utilisation</dt><dd>Gel : 2 à 3 fois/jour. Solution : pure, 2 à 3 fois/jour. Transcutanée : pure, 2 fois/jour ; pansement humide 30 min ou bain de 1 à 3 min pour infections unguéales/périunguéales.</dd></div></dl>
+        </section>
+      </div>
+    </article><article class="card" tabindex="0" role="button" aria-label="Carte 7, EAU OXYGÉNÉE À 10 VOLUMES. Cliquer pour retourner la carte." aria-pressed="false">
+      <div class="card-inner">
+        <section class="face front">
+          <div class="card-label">CARTE 07</div>
+          <h2>EAU OXYGÉNÉE À 10 VOLUMES</h2>
+          <p class="eyebrow">Question mémoire</p>
+          <p class="question">Quel produit est faiblement antiseptique mais peut aider lors d’un petit saignement capillaire ?</p>
+          <p class="hint">Cliquer ou appuyer sur Entrée pour afficher la réponse</p>
+        </section>
+        <section class="face back" aria-hidden="true">
+          <header><span>CARTE 07</span><strong>EAU OXYGÉNÉE À 10 VOLUMES</strong></header>
+          <p class="eyebrow">Réponse essentielle</p>
+          <dl><div class="fact"><dt>Famille</dt><dd>Agent oxydant ; considérée à tort comme antiseptique - hémostatique non absorbable</dd></div><div class="fact"><dt>Propriétés</dt><dd>Faiblement antiseptique et hémostatique. « 10 volumes » : 1 L peut dégager 10 L d’oxygène actif.</dd></div><div class="fact"><dt>Composition</dt><dd>Peroxyde d’hydrogène.</dd></div><div class="fact"><dt>Indications</dt><dd>Nettoyage de la peau érodée et des petites plaies ; petites hémorragies capillaires liées à des plaies superficielles.</dd></div><div class="fact"><dt>Précautions / contre-indications</dt><dd>Ne pas associer à d’autres antiseptiques ou savons ; inactivée par les matières organiques (protéines, sang, pus) ; ne désinfecte pas le matériel chirurgical.</dd></div><div class="fact"><dt>Utilisation</dt><dd>Application locale selon l’indication.</dd></div></dl>
+        </section>
+      </div>
+    </article><article class="card" tabindex="0" role="button" aria-label="Carte 8, HOMÉOPLASMINE. Cliquer pour retourner la carte." aria-pressed="false">
+      <div class="card-inner">
+        <section class="face front">
+          <div class="card-label">CARTE 08</div>
+          <h2>HOMÉOPLASMINE</h2>
+          <p class="eyebrow">Question mémoire</p>
+          <p class="question">Quel protecteur cutané est réservé aux dermites irritatives non infectées et non suintantes ?</p>
+          <p class="hint">Cliquer ou appuyer sur Entrée pour afficher la réponse</p>
+        </section>
+        <section class="face back" aria-hidden="true">
+          <header><span>CARTE 08</span><strong>HOMÉOPLASMINE</strong></header>
+          <p class="eyebrow">Réponse essentielle</p>
+          <dl><div class="fact"><dt>Famille</dt><dd>Protecteur cutané</dd></div><div class="fact"><dt>Propriétés</dt><dd>Traitement d’appoint des dermites irritatives.</dd></div><div class="fact"><dt>Composition</dt><dd>Teintures de souci des jardins, phytolaque, bryone et benjoin du Laos + acide borique.</dd></div><div class="fact"><dt>Indications</dt><dd>Dermites irritatives.</dd></div><div class="fact"><dt>Précautions / contre-indications</dt><dd>Ne pas appliquer sur des lésions infectées ou suintantes ; ne pas utiliser chez l’enfant de moins de 30 mois.</dd></div><div class="fact"><dt>Utilisation</dt><dd>1 à 3 applications par jour.</dd></div></dl>
+        </section>
+      </div>
+    </article><article class="card" tabindex="0" role="button" aria-label="Carte 9, TULLE GRAS. Cliquer pour retourner la carte." aria-pressed="false">
+      <div class="card-inner">
+        <section class="face front">
+          <div class="card-label">CARTE 09</div>
+          <h2>TULLE GRAS</h2>
+          <p class="eyebrow">Question mémoire</p>
+          <p class="question">Quel pansement maintient un milieu humide grâce à de la vaseline minérale ?</p>
+          <p class="hint">Cliquer ou appuyer sur Entrée pour afficher la réponse</p>
+        </section>
+        <section class="face back" aria-hidden="true">
+          <header><span>CARTE 09</span><strong>TULLE GRAS</strong></header>
+          <p class="eyebrow">Réponse essentielle</p>
+          <dl><div class="fact"><dt>Famille</dt><dd>Pansement gras</dd></div><div class="fact"><dt>Propriétés</dt><dd>Protège la plaie et maintient un milieu humide favorable à la cicatrisation.</dd></div><div class="fact"><dt>Composition</dt><dd>Tissu de viscose à mailles serrées imprégné de vaseline minérale.</dd></div><div class="fact"><dt>Indications</dt><dd>Traitement des plaies aiguës ou chroniques.</dd></div><div class="fact"><dt>Précautions / contre-indications</dt><dd>Respecter le protocole de soin et surveiller l’évolution de la plaie.</dd></div><div class="fact"><dt>Utilisation</dt><dd>Changer le pansement 2 ou 3 fois par semaine.</dd></div></dl>
+        </section>
+      </div>
+    </article><article class="card" tabindex="0" role="button" aria-label="Carte 10, COALGAN. Cliquer pour retourner la carte." aria-pressed="false">
+      <div class="card-inner">
+        <section class="face front">
+          <div class="card-label">CARTE 10</div>
+          <h2>COALGAN</h2>
+          <p class="eyebrow">Question mémoire</p>
+          <p class="question">Quel hémostatique est composé d’alginate de calcium ?</p>
+          <p class="hint">Cliquer ou appuyer sur Entrée pour afficher la réponse</p>
+        </section>
+        <section class="face back" aria-hidden="true">
+          <header><span>CARTE 10</span><strong>COALGAN</strong></header>
+          <p class="eyebrow">Réponse essentielle</p>
+          <dl><div class="fact"><dt>Famille</dt><dd>Hémostatique et cicatrisant</dd></div><div class="fact"><dt>Propriétés</dt><dd>Favorise l’hémostase et la cicatrisation.</dd></div><div class="fact"><dt>Composition</dt><dd>Fibres d’alginate de calcium.</dd></div><div class="fact"><dt>Indications</dt><dd>Saignements cutanés, nasaux ou buccaux ; plaies cutanées ≤ 8 cm² ; plaies chirurgicales ou traumatiques ; fin de cicatrisation.</dd></div><div class="fact"><dt>Précautions / contre-indications</dt><dd>Interactions avec les solutions alcalines, l’hypochlorite de sodium, la chlorhexidine, le chlorure de benzalkonium et les sels de cuivre. Si besoin, rincer au NaCl à 0,9 %.</dd></div><div class="fact"><dt>Utilisation</dt><dd>Appliquer selon le protocole d’hémostase ou de cicatrisation.</dd></div></dl>
+        </section>
+      </div>
+    </article><article class="card" tabindex="0" role="button" aria-label="Carte 11, BLOXANG. Cliquer pour retourner la carte." aria-pressed="false">
+      <div class="card-inner">
+        <section class="face front">
+          <div class="card-label">CARTE 11</div>
+          <h2>BLOXANG</h2>
+          <p class="eyebrow">Question mémoire</p>
+          <p class="question">Quel hémostatique peut se présenter sous forme d’éponge de gélatine ?</p>
+          <p class="hint">Cliquer ou appuyer sur Entrée pour afficher la réponse</p>
+        </section>
+        <section class="face back" aria-hidden="true">
+          <header><span>CARTE 11</span><strong>BLOXANG</strong></header>
+          <p class="eyebrow">Réponse essentielle</p>
+          <dl><div class="fact"><dt>Famille</dt><dd>Hémostatique et traitement des plaies</dd></div><div class="fact"><dt>Propriétés</dt><dd>Aide à l’hémostase et au traitement local des plaies.</dd></div><div class="fact"><dt>Composition</dt><dd>Éponge de gélatine ; la crème contient notamment des acides gras, extrait de levure, phosphatidylcholine, vitamine E, cire d’abeille, huile de soja et sels minéraux.</dd></div><div class="fact"><dt>Indications</dt><dd>Épistaxis d’origine physiologique ou traumatique ; saignements des gencives ; coupures et écorchures.</dd></div><div class="fact"><dt>Précautions / contre-indications</dt><dd>Respecter la présentation utilisée et le protocole de soin.</dd></div><div class="fact"><dt>Utilisation</dt><dd>Utiliser selon la forme du produit et l’indication.</dd></div></dl>
+        </section>
+      </div>
+    </article></section></main>
+  <footer>Support de mémorisation réalisé à partir du cours fourni.</footer>
+  <script>
+    const cards = [...document.querySelectorAll('.card')];
+    function setCard(card, flipped) {
+      card.classList.toggle('flipped', flipped);
+      card.setAttribute('aria-pressed', String(flipped));
+      card.querySelector('.front').setAttribute('aria-hidden', String(flipped));
+      card.querySelector('.back').setAttribute('aria-hidden', String(!flipped));
+    }
+    cards.forEach(card => {
+      card.addEventListener('click', () => setCard(card, !card.classList.contains('flipped')));
+      card.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setCard(card, !card.classList.contains('flipped')); }
+      });
+    });
+    document.getElementById('reveal').addEventListener('click', () => cards.forEach(card => setCard(card, true)));
+    document.getElementById('reset').addEventListener('click', () => cards.forEach(card => setCard(card, false)));
+  </script>
+</body>
+</html>
